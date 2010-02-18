@@ -1,0 +1,4 @@
+127.0.0.1 - - [18/Feb/2010 22:48:19] "GET /people " 200 3487 0.0099
+./app.rb:19: warning: The 'header' method is deprecated; use 'headers' instead.
+Auto-require of Sass is deprecated; add require 'Sass' to your app.
+127.0.0.1 - - [18/Feb/2010 22:48:20] "GET /stylesheets/styles.css " 200 35 0.1104
