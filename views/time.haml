@@ -1,0 +1,20 @@
+- @title = "Time"
+
+%a{ :href => "/people" } People
+
+%div#time
+
+%div#intervals
+
+:javascript
+  $(document).ready(function() {
+    var time_tpl = "<h1><%= time %></h1>";
+    var time = _.template(time_tpl, { time : "#{current_time.strftime('%H:%M:%S')}" });
+    $('#time').append(time);
+    
+    var intervals_tpl = "<% _.each(intervals, function(interval) { %>\
+                            <h3><%= interval %></h3>\
+                         <% }); %>";
+    var intervals = _.template(intervals_tpl, { intervals : #{intervals.to_json} })
+    $('#intervals').append(intervals)
+  });

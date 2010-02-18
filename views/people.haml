@@ -1,0 +1,26 @@
+- @title = "People"
+
+%a{ :href => "/time" } Time
+
+%div#people
+
+:javascript
+   $(document).ready(function() {
+     var people_tpl = "<table>\
+                         <% _.each(people, function(person) { %>\
+                           <tr>\
+                             <td><b>Person</b></td>\
+                             <td><%= person.name %></td>\
+                             <td><%= person.age %></td>\
+                           </tr>\
+                           <% _.each([1,3,5], function(child) { %>\
+                             <tr>\
+                               <td>Child</td>\
+                               <td><%= child %></td>\
+                             </tr>\
+                           <% }); %>\
+                         <% }); %>\
+                       </table>"
+     var people = _.template(people_tpl, { people : #{people.to_json} });
+     $('#people').append(people);
+   });
