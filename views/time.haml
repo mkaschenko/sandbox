@@ -3,18 +3,21 @@
 %a{ :href => "/people" } People
 
 %div#time
+  %h1 {{= time }}
+  
 
 %div#intervals
-
+  {{ _.each(intervals, function(interval) { }}
+  %h3 {{= interval }}
+  {{ }); }}
+  
 :javascript
   $(document).ready(function() {
-    var time_tpl = "<h1><%= time %></h1>";
-    var time = _.template(time_tpl, { time : "#{current_time.strftime('%H:%M:%S')}" });
-    $('#time').append(time);
     
-    var intervals_tpl = "<% _.each(intervals, function(interval) { %>\
-                            <h3><%= interval %></h3>\
-                         <% }); %>";
-    var intervals = _.template(intervals_tpl, { intervals : #{intervals.to_json} })
-    $('#intervals').append(intervals)
-  });
+    var time_tpl = $('#time').html();
+    $('#time').html( _.template(time_tpl, { time : #{current_time.strftime('%H:%M:%S').to_json} }) );
+    
+    var intervals_tpl = $('#intervals').html();
+    $('#intervals').html( _.template(intervals_tpl, { intervals : #{intervals.to_json} }) );
+    
+  })

@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
+require 'Sass'
 require 'active_record'
 
 get '/' do
@@ -8,7 +9,7 @@ get '/' do
 end
 
 get '/people' do
-  haml :people, :locals => { :people => some_people(25) }
+  haml :people, :locals => { :people => some_people(5) }
 end
 
 get '/time' do
@@ -16,7 +17,7 @@ get '/time' do
 end
 
 get '/stylesheets/styles.css' do
-  header 'Content-Type' => 'text/css; charset=utf-8'
+  headers 'Content-Type' => 'text/css; charset=utf-8'
   sass :styles
 end
 
@@ -31,10 +32,12 @@ end
 
 def some_people(quantity = 1)
   people = []
+  ages = (20..40).to_a
+  children_ages = (5..10).to_a
   quantity.times do |number|
     number += 1
-    age = (15..30).to_a.choice
-    person = { :name => "Person_#{number}", :age => age, :children => [{ :name => "Children_#{number}" }]}
+    person = { :name => "Person_#{number}", :age => ages.choice, 
+               :children => [{ :name => "Child_#{number}", :age => children_ages.choice }] }
     people << person
   end
   people

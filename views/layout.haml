@@ -15,3 +15,10 @@
       %h1
         = @title
     = yield
+    
+    :javascript
+      _.templateSettings = {
+        start       : '{{',
+        end         : '}}',
+        interpolate : /{{=(.+?)}}/g
+      };
