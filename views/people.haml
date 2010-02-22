@@ -21,26 +21,6 @@
     {{ }); }}
 
 %div#people_table
-/ %table{ :cellspacing => 0 }
-/   %tr
-/     %th Who
-/     %th Name
-/     %th Age
-/   %tr
-/     %td#first 
-/       %h4 Person
-/     %td {{= person.name }}
-/     %td {{= person.age }}
-/   %tr
-/     %td#first
-/       %h4 Child
-/     %td {{= child.name }}
-/     %td {{= child.age }}
-/ 
-/ {{ _.each(people, function(person) { }}
-/ {{ _.each(person.children, function(child) { }}
-/ {{ }); }}
-/ {{ }); }}
 
 :javascript
   $(document).ready(function() {
@@ -48,7 +28,27 @@
     var people_list_tpl = $('#people_list').html();
     $('#people_list').html( _.template(people_list_tpl, { people : #{people.to_json} }) );
 
-    var people_table_tple = "<table>\
+    // This is ugly
+    var people_table_tpl = "<table>\
+                               <tr>\
+                                 <th>Who</th>\
+                                 <th>Name</th>\
+                                 <th>Age</th>\
+                               </tr>\
+                               {{ _.each(people, function(person) { }}\
+                               <tr>\
+                                 <td><b>Person</b></td>\
+                                 <td>{{= person.name }}</td>\
+                                 <td>{{= person.age }}</td>\
+                               </tr>\
+                               {{ _.each(person.children, function(child) { }}\
+                               <tr>\
+                                 <td><b>Child</b></td>\
+                                 <td>{{= child.name }}</td>\
+                                 <td>{{= child.age }}</td>\
+                               </tr>\
+                               {{ }); }}\
+                               {{ }); }}\
                              </table>";
     $('#people_table').html( _.template(people_table_tpl, { people : #{people.to_json} }) );                            
   });
