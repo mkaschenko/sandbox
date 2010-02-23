@@ -3,6 +3,8 @@
 %a{ :href => "/time" } Time
 
 %div#people_list
+
+%script#people_list_tpl{:type => 'text/html'}
   %dl
     {{ _.each(people, function(person) { }}
     %li
@@ -22,33 +24,34 @@
 
 %div#people_table
 
+%script#people_table_tpl{:type => 'text/html'}
+  %table
+    %tr
+      %th Who
+      %th Name
+      %th Age
+    {{ _.each(people, function(person) { }}
+    %tr
+      %td Person
+      %td {{= person.name }}
+      %td {{= person.age }}
+    {{ _.each(person.children, function(child) { }}
+    %tr
+      %td Child
+      %td {{= child.name }}
+      %td {{= child.age }}
+    {{ }); }}
+    {{ }); }}
+
+
+
 :javascript
   $(document).ready(function() {
 
-    var people_list_tpl = $('#people_list').html();
+    var people_list_tpl = $('#people_list_tpl').html();
     $('#people_list').html( _.template(people_list_tpl, { people : #{people.to_json} }) );
 
-    // This is ugly
-    var people_table_tpl = "<table>\
-                               <tr>\
-                                 <th>Who</th>\
-                                 <th>Name</th>\
-                                 <th>Age</th>\
-                               </tr>\
-                               {{ _.each(people, function(person) { }}\
-                               <tr>\
-                                 <td><b>Person</b></td>\
-                                 <td>{{= person.name }}</td>\
-                                 <td>{{= person.age }}</td>\
-                               </tr>\
-                               {{ _.each(person.children, function(child) { }}\
-                               <tr>\
-                                 <td><b>Child</b></td>\
-                                 <td>{{= child.name }}</td>\
-                                 <td>{{= child.age }}</td>\
-                               </tr>\
-                               {{ }); }}\
-                               {{ }); }}\
-                             </table>";
-    $('#people_table').html( _.template(people_table_tpl, { people : #{people.to_json} }) );                            
+    var people_table_tpl = $('#people_table_tpl').html()
+    $('#people_table').html( _.template(people_table_tpl, { people : #{people.to_json} }) );
+    
   });
